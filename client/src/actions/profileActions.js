@@ -35,6 +35,33 @@ export const createProfile = (profileData, history) => dispatch => {
     );
 };
 
+// Profile loading
+export const setProfileLoading = () => {
+  return {
+    type: PROFILE_LOADING
+  };
+};
+
+// clear profile
+export const clearCurrentProfile = () => {
+  return {
+    type: CLEAR_CURRENT_PROFILE
+  };
+};
+
+// Add experience
+export const addExperience = (expData, history) => dispatch => {
+  axios
+    .post("/api/profile/experience", expData)
+    .then(res => history.push("/dashboard"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Delete account & Profile
 export const deleteAccount = () => dispatch => {
   if (window.confirm("Are you sure? This CANNOT be undone.")) {
@@ -53,18 +80,4 @@ export const deleteAccount = () => dispatch => {
         })
       );
   }
-};
-
-// Profile loading
-export const setProfileLoading = () => {
-  return {
-    type: PROFILE_LOADING
-  };
-};
-
-// clear profile
-export const clearCurrentProfile = () => {
-  return {
-    type: CLEAR_CURRENT_PROFILE
-  };
 };
